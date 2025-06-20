@@ -1,2 +1,159 @@
 <!DOCTYPE html>
-<!-- Aquí iría el HTML de ropa-elegante.html entregado anteriormente -->
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Coco Fashion | Ropa Elegante</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Segoe+UI&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #F4F7F6 0%, #E2E8F0 100%);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    header {
+      background-color: #4A4E69;
+      color: #fff;
+      width: 100%;
+      padding: 25px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .logo {
+      height: 60px;
+      border-radius: 8px;
+      margin-right: 15px;
+    }
+    .header-content {
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+    header p {
+      margin: 5px 0 0;
+      font-size: 1.1rem;
+      font-style: italic;
+      opacity: 0.9;
+    }
+    .productos {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 30px;
+      max-width: 1100px;
+      width: 90%;
+      margin: 30px auto;
+    }
+    .producto {
+      background: #fff;
+      border-radius: 15px;
+      padding: 15px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+    .producto:hover {
+      transform: translateY(-7px);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+    }
+    .producto img {
+      width: 100%;
+      height: 270px;
+      border-radius: 12px;
+      object-fit: cover;
+      margin-bottom: 12px;
+    }
+    .producto h3 {
+      margin: 0 0 8px;
+      font-size: 1.15rem;
+      color: #4A4E69;
+      font-weight: 600;
+    }
+    .producto p {
+      color: #FF8C61;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    .producto button {
+      background-color: #FF8C61;
+      border: none;
+      padding: 10px 18px;
+      color: white;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-size: 1rem;
+    }
+    .producto button:hover {
+      background-color: #E67A50;
+    }
+    @media (max-width: 768px) {
+      .productos {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      }
+      .producto img {
+        height: 200px;
+      }
+    }
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      padding: 15px;
+      color: #777;
+      border-top: 1px solid #ccc;
+      margin-top: auto;
+      background: #f9f9f9;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="./imagenes/coco-logo.png" class="logo" alt="Coco Fashion Logo">
+  <div class="header-content">
+    <h1>Coco Fashion</h1>
+    <p>Ropa Elegante</p>
+  </div>
+</header>
+
+<section class="productos">
+  <div class="producto">
+    <img src="https://i.pinimg.com/736x/61/df/5f/61df5f54c189c9edbf5d4a1d0bbf16e7.jpg" alt="Vestido azul elegante">
+    <h3>Vestido Floral Azul</h3>
+    <p>$123.42</p>
+    <button>Añadir al carrito</button>
+  </div>
+  <div class="producto">
+    <img src="https://placehold.co/300x400/4A4E69/FFFFFF?text=Blazer+Elegante" alt="Blazer elegante">
+    <h3>Blazer Elegante</h3>
+    <p>$89.90</p>
+    <button>Añadir al carrito</button>
+  </div>
+  <div class="producto">
+    <img src="https://placehold.co/300x400/E67A50/FFFFFF?text=Zapatos+Negros" alt="Zapatos Negros">
+    <h3>Zapatos Negros de Charol</h3>
+    <p>$144.30</p>
+    <button>Añadir al carrito</button>
+  </div>
+  <!-- Puedes agregar más productos aquí -->
+</section>
+
+<footer>
+  <p>&copy; Coco Fashion 2025 | Ropa Elegante</p>
+</footer>
+
+</body>
+</html>
