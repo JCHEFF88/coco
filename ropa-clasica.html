@@ -99,7 +99,6 @@
     .producto button:hover {
       background-color: #E67A50;
     }
-
     .pagination {
       display: flex;
       justify-content: center;
@@ -121,7 +120,6 @@
       opacity: 0.4;
       cursor: not-allowed;
     }
-
     .carrito-info {
       background: #fffbe6;
       padding: 10px 20px;
@@ -131,8 +129,16 @@
       color: #333;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
-
+    .icono-carrito {
+      width: 24px;
+      height: 24px;
+      vertical-align: middle;
+    }
     #carrito-detalle {
       display: none;
       background: white;
@@ -166,7 +172,6 @@
       font-weight: bold;
       margin-top: 10px;
     }
-
     footer {
       text-align: center;
       font-size: 0.9rem;
@@ -189,7 +194,11 @@
   </div>
 </header>
 
-<div class="carrito-info" id="carrito-info" onclick="toggleCarrito()">Carrito: 0 productos</div>
+<!-- Carrito visual -->
+<div class="carrito-info" id="carrito-info" onclick="toggleCarrito()">
+  <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" alt="Carrito" class="icono-carrito">
+  <span id="carrito-texto">Carrito: 0 productos - $0.00</span>
+</div>
 
 <div id="carrito-detalle">
   <ul id="lista-carrito"></ul>
@@ -254,7 +263,6 @@
   }
 
   function actualizarCarrito() {
-    document.getElementById("carrito-info").innerText = `Carrito: ${carrito.length} producto${carrito.length === 1 ? '' : 's'}`;
     const lista = document.getElementById("lista-carrito");
     lista.innerHTML = "";
     let total = 0;
@@ -266,6 +274,7 @@
     });
 
     document.getElementById("carrito-total").innerText = `Total: $${total.toFixed(2)}`;
+    document.getElementById("carrito-texto").innerText = `Carrito: ${carrito.length} producto${carrito.length === 1 ? '' : 's'} - $${total.toFixed(2)}`;
   }
 
   function cambiarPagina(dir) {
