@@ -214,6 +214,7 @@
 
 <div class="pagination">
   <button id="btn-anterior" onclick="cambiarPagina(-1)">⬅ Anterior</button>
+  <span id="contador-pagina" style="align-self: center; font-weight: bold; color: #4A4E69;">Página 1/5</span>
   <button id="btn-siguiente" onclick="cambiarPagina(1)">Siguiente ➡</button>
 </div>
 
@@ -255,6 +256,7 @@ function mostrarProductos() {
   });
 
   actualizarFlechas();
+  document.getElementById("contador-pagina").innerText = `Página ${paginaActual}/${Math.ceil(productos.length / productosPorPagina)}`;
 }
 
 function agregarAlCarrito(index) {
