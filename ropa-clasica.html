@@ -47,6 +47,7 @@
       font-style: italic;
       opacity: 0.9;
     }
+
     .productos {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -99,6 +100,27 @@
     .producto button:hover {
       background-color: #E67A50;
     }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    .pagination button {
+      background-color: #4A4E69;
+      color: white;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .pagination button:hover {
+      background-color: #393c54;
+    }
+
     @media (max-width: 768px) {
       .productos {
         grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -107,6 +129,7 @@
         height: 200px;
       }
     }
+
     footer {
       text-align: center;
       font-size: 0.9rem;
@@ -122,38 +145,93 @@
 <body>
 
 <header>
-  <img src="https://jcheff88.github.io/coco" class="logo" alt="Coco Fashion Logo">
+  <img src="https://i.imgur.com/3iJHYiA.png" class="logo" alt="Coco Fashion Logo">
   <div class="header-content">
     <h1>Coco Fashion</h1>
     <p>Ropa Clásica</p>
   </div>
 </header>
 
-<section class="productos">
-  <div class="producto">
-    <img src="https://i.pinimg.com/736x/ff/69/50/ff69509834d57f8348c89534ac0f16a3.jpg" alt="Camisa blanca">
-    <h3>Camisa casual blanca</h3>
-    <p>$27.51</p>
-    <button>Añadir al carrito</button>
-  </div>
-  <div class="producto">
-    <img src="https://i.pinimg.com/736x/39/aa/5b/39aa5b6f5c3b4d605aa6de199be1c52a.jpg" alt="Pantalón vaquero">
-    <h3>Pantalón Vaquero</h3>
-    <p>$45.20</p>
-    <button>Añadir al carrito</button>
-  </div>
-  <div class="producto">
-    <img src="https://i.pinimg.com/736x/7c/26/b2/7c26b24fa123e72f80f82f3c435105c3.jpg" alt="Vestido de verano">
-    <h3>Vestido de verano</h3>
-    <p>$112.99</p>
-    <button>Añadir al carrito</button>
-  </div>
-  <!-- Puedes añadir más productos aquí -->
+<section class="productos" id="lista-productos">
+  <!-- Los productos se generarán con JavaScript -->
 </section>
+
+<div class="pagination">
+  <button onclick="cambiarPagina(-1)">⬅ Anterior</button>
+  <button onclick="cambiarPagina(1)">Siguiente ➡</button>
+</div>
 
 <footer>
   <p>&copy; Coco Fashion 2025 | Ropa Clásica</p>
 </footer>
+
+<script>
+  const productos = [
+    {
+      nombre: "Camisa casual blanca",
+      precio: "$27.51",
+      imagen: "https://i.pinimg.com/736x/ff/69/50/ff69509834d57f8348c89534ac0f16a3.jpg"
+    },
+    {
+      nombre: "Pantalón Vaquero",
+      precio: "$45.20",
+      imagen: "https://i.pinimg.com/736x/39/aa/5b/39aa5b6f5c3b4d605aa6de199be1c52a.jpg"
+    },
+    {
+      nombre: "Vestido de verano",
+      precio: "$112.99",
+      imagen: "https://i.pinimg.com/736x/7c/26/b2/7c26b24fa123e72f80f82f3c435105c3.jpg"
+    },
+    {
+      nombre: "Falda clásica negra",
+      precio: "$36.75",
+      imagen: "https://i.pinimg.com/736x/cb/33/ae/cb33ae764bb15ef57a22a82ac8a4f947.jpg"
+    },
+    {
+      nombre: "Chamarra beige",
+      precio: "$52.99",
+      imagen: "https://i.pinimg.com/736x/3f/8d/26/3f8d26780b4bc4b810b69e4175a77437.jpg"
+    },
+    {
+      nombre: "Camisa formal a cuadros",
+      precio: "$39.50",
+      imagen: "https://i.pinimg.com/736x/63/0c/67/630c672d5a0bce308bc6e08aa2b2c9d3.jpg"
+    }
+  ];
+
+  let paginaActual = 1;
+  const productosPorPagina = 3;
+
+  function mostrarProductos() {
+    const contenedor = document.getElementById("lista-productos");
+    contenedor.innerHTML = "";
+    const inicio = (paginaActual - 1) * productosPorPagina;
+    const fin = inicio + productosPorPagina;
+    const visibles = productos.slice(inicio, fin);
+
+    visibles.forEach(p => {
+      contenedor.innerHTML += `
+        <div class="producto">
+          <img src="${p.imagen}" alt="${p.nombre}">
+          <h3>${p.nombre}</h3>
+          <p>${p.precio}</p>
+          <button>Añadir al carrito</button>
+        </div>
+      `;
+    });
+  }
+
+  function cambiarPagina(direccion) {
+    const totalPaginas = Math.ceil(productos.length / productosPorPagina);
+    paginaActual += direccion;
+    if (paginaActual < 1) paginaActual = 1;
+    if (paginaActual > totalPaginas) paginaActual = totalPaginas;
+    mostrarProductos();
+  }
+
+  // Inicializar
+  mostrarProductos();
+</script>
 
 </body>
 </html>
