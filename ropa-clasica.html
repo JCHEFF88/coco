@@ -12,10 +12,6 @@
       background: linear-gradient(135deg, #F4F7F6 0%, #E2E8F0 100%);
       margin: 0;
       padding: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
     }
     header {
       background-color: #4A4E69;
@@ -121,33 +117,37 @@
       cursor: not-allowed;
     }
     .carrito-info {
+      position: fixed;
+      top: 20px;
+      right: 20px;
       background: #fffbe6;
-      padding: 10px 20px;
-      margin: 10px auto;
-      border-radius: 10px;
+      padding: 10px 16px;
+      border-radius: 12px;
       font-weight: bold;
       color: #333;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
       cursor: pointer;
       display: flex;
       align-items: center;
-      justify-content: center;
       gap: 8px;
+      z-index: 1000;
     }
     .icono-carrito {
       width: 24px;
       height: 24px;
-      vertical-align: middle;
     }
     #carrito-detalle {
+      position: fixed;
+      top: 70px;
+      right: 20px;
       display: none;
       background: white;
       border: 1px solid #ccc;
       border-radius: 10px;
       padding: 15px;
       width: 300px;
-      margin-bottom: 20px;
       box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      z-index: 1000;
     }
     #carrito-detalle ul {
       list-style: none;
@@ -178,7 +178,6 @@
       padding: 15px;
       color: #777;
       border-top: 1px solid #ccc;
-      margin-top: auto;
       background: #f9f9f9;
       width: 100%;
     }
@@ -194,7 +193,6 @@
   </div>
 </header>
 
-<!-- Carrito visual -->
 <div class="carrito-info" id="carrito-info" onclick="toggleCarrito()">
   <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" alt="Carrito" class="icono-carrito">
   <span id="carrito-texto">Carrito: 0 productos - $0.00</span>
@@ -217,86 +215,86 @@
 </footer>
 
 <script>
-  const productos = [
-    { nombre: "Camisa blanca", precio: "$27.51", imagen: "https://i.pinimg.com/736x/ff/69/50/ff69509834d57f8348c89534ac0f16a3.jpg" },
-    { nombre: "Pantalón vaquero", precio: "$45.20", imagen: "https://i.pinimg.com/736x/39/aa/5b/39aa5b6f5c3b4d605aa6de199be1c52a.jpg" },
-    { nombre: "Vestido de verano", precio: "$112.99", imagen: "https://i.pinimg.com/736x/7c/26/b2/7c26b24fa123e72f80f82f3c435105c3.jpg" },
-    { nombre: "Falda clásica", precio: "$36.75", imagen: "https://i.pinimg.com/736x/cb/33/ae/cb33ae764bb15ef57a22a82ac8a4f947.jpg" },
-    { nombre: "Chamarra beige", precio: "$52.99", imagen: "https://i.pinimg.com/736x/3f/8d/26/3f8d26780b4bc4b810b69e4175a77437.jpg" },
-    { nombre: "Camisa a cuadros", precio: "$39.50", imagen: "https://i.pinimg.com/736x/63/0c/67/630c672d5a0bce308bc6e08aa2b2c9d3.jpg" }
-  ];
+const productos = [];
+for (let i = 1; i <= 50; i++) {
+  productos.push({
+    nombre: `Producto ${i}`,
+    precio: `$${(Math.random() * 100 + 10).toFixed(2)}`,
+    imagen: `https://picsum.photos/seed/prod${i}/300/400`
+  });
+}
 
-  let paginaActual = 1;
-  const productosPorPagina = 3;
-  let carrito = [];
+let paginaActual = 1;
+const productosPorPagina = 10;
+let carrito = [];
 
-  function mostrarProductos() {
-    const contenedor = document.getElementById("lista-productos");
-    contenedor.innerHTML = "";
-    const inicio = (paginaActual - 1) * productosPorPagina;
-    const fin = inicio + productosPorPagina;
-    const visibles = productos.slice(inicio, fin);
+function mostrarProductos() {
+  const contenedor = document.getElementById("lista-productos");
+  contenedor.innerHTML = "";
+  const inicio = (paginaActual - 1) * productosPorPagina;
+  const fin = inicio + productosPorPagina;
+  const visibles = productos.slice(inicio, fin);
 
-    visibles.forEach((p, i) => {
-      const index = inicio + i;
-      contenedor.innerHTML += `
-        <div class="producto">
-          <img src="${p.imagen}" alt="${p.nombre}">
-          <h3>${p.nombre}</h3>
-          <p>${p.precio}</p>
-          <button onclick="agregarAlCarrito(${index})">Añadir al carrito</button>
-        </div>
-      `;
-    });
+  visibles.forEach((p, i) => {
+    const index = inicio + i;
+    contenedor.innerHTML += `
+      <div class="producto">
+        <img src="${p.imagen}" alt="${p.nombre}">
+        <h3>${p.nombre}</h3>
+        <p>${p.precio}</p>
+        <button onclick="agregarAlCarrito(${index})">Añadir al carrito</button>
+      </div>
+    `;
+  });
 
-    actualizarFlechas();
-  }
+  actualizarFlechas();
+}
 
-  function agregarAlCarrito(index) {
-    carrito.push(productos[index]);
-    actualizarCarrito();
-  }
+function agregarAlCarrito(index) {
+  carrito.push(productos[index]);
+  actualizarCarrito();
+}
 
-  function eliminarDelCarrito(i) {
-    carrito.splice(i, 1);
-    actualizarCarrito();
-  }
+function eliminarDelCarrito(i) {
+  carrito.splice(i, 1);
+  actualizarCarrito();
+}
 
-  function actualizarCarrito() {
-    const lista = document.getElementById("lista-carrito");
-    lista.innerHTML = "";
-    let total = 0;
+function actualizarCarrito() {
+  const lista = document.getElementById("lista-carrito");
+  lista.innerHTML = "";
+  let total = 0;
 
-    carrito.forEach((p, i) => {
-      const precioNum = parseFloat(p.precio.replace("$", ""));
-      total += precioNum;
-      lista.innerHTML += `<li>${p.nombre} <span>${p.precio}</span> <button onclick="eliminarDelCarrito(${i})">✕</button></li>`;
-    });
+  carrito.forEach((p, i) => {
+    const precioNum = parseFloat(p.precio.replace("$", ""));
+    total += precioNum;
+    lista.innerHTML += `<li>${p.nombre} <span>${p.precio}</span> <button onclick="eliminarDelCarrito(${i})">✕</button></li>`;
+  });
 
-    document.getElementById("carrito-total").innerText = `Total: $${total.toFixed(2)}`;
-    document.getElementById("carrito-texto").innerText = `Carrito: ${carrito.length} producto${carrito.length === 1 ? '' : 's'} - $${total.toFixed(2)}`;
-  }
+  document.getElementById("carrito-total").innerText = `Total: $${total.toFixed(2)}`;
+  document.getElementById("carrito-texto").innerText = `Carrito: ${carrito.length} producto${carrito.length === 1 ? '' : 's'} - $${total.toFixed(2)}`;
+}
 
-  function cambiarPagina(dir) {
-    const totalPaginas = Math.ceil(productos.length / productosPorPagina);
-    paginaActual += dir;
-    if (paginaActual < 1) paginaActual = 1;
-    if (paginaActual > totalPaginas) paginaActual = totalPaginas;
-    mostrarProductos();
-  }
-
-  function actualizarFlechas() {
-    const totalPaginas = Math.ceil(productos.length / productosPorPagina);
-    document.getElementById("btn-anterior").disabled = (paginaActual === 1);
-    document.getElementById("btn-siguiente").disabled = (paginaActual === totalPaginas);
-  }
-
-  function toggleCarrito() {
-    const panel = document.getElementById("carrito-detalle");
-    panel.style.display = panel.style.display === "block" ? "none" : "block";
-  }
-
+function cambiarPagina(dir) {
+  const totalPaginas = Math.ceil(productos.length / productosPorPagina);
+  paginaActual += dir;
+  if (paginaActual < 1) paginaActual = 1;
+  if (paginaActual > totalPaginas) paginaActual = totalPaginas;
   mostrarProductos();
+}
+
+function actualizarFlechas() {
+  const totalPaginas = Math.ceil(productos.length / productosPorPagina);
+  document.getElementById("btn-anterior").disabled = (paginaActual === 1);
+  document.getElementById("btn-siguiente").disabled = (paginaActual === totalPaginas);
+}
+
+function toggleCarrito() {
+  const panel = document.getElementById("carrito-detalle");
+  panel.style.display = panel.style.display === "block" ? "none" : "block";
+}
+
+mostrarProductos();
 </script>
 
 </body>
