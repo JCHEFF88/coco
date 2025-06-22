@@ -47,7 +47,6 @@
       font-style: italic;
       opacity: 0.9;
     }
-
     .productos {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -116,18 +115,21 @@
       border-radius: 8px;
       cursor: pointer;
       font-weight: bold;
+      transition: opacity 0.3s ease;
     }
-    .pagination button:hover {
-      background-color: #393c54;
+    .pagination button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
     }
 
-    @media (max-width: 768px) {
-      .productos {
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      }
-      .producto img {
-        height: 200px;
-      }
+    .carrito-info {
+      background: #fffbe6;
+      padding: 10px 20px;
+      margin: 10px auto;
+      border-radius: 10px;
+      font-weight: bold;
+      color: #333;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
 
     footer {
@@ -145,20 +147,24 @@
 <body>
 
 <header>
-  <img src="https://jcheff88.github.io/coco" class="logo" alt="Coco Fashion Logo">
+  <img src="https://i.imgur.com/3iJHYiA.png" class="logo" alt="Coco Fashion Logo">
   <div class="header-content">
     <h1>Coco Fashion</h1>
     <p>Ropa Clásica</p>
   </div>
 </header>
 
+<div class="carrito-info" id="carrito-info">
+  Carrito: 0 productos
+</div>
+
 <section class="productos" id="lista-productos">
-  <!-- Los productos se generarán con JavaScript -->
+  <!-- Productos se cargan con JS -->
 </section>
 
 <div class="pagination">
-  <button onclick="cambiarPagina(-1)">⬅ Anterior</button>
-  <button onclick="cambiarPagina(1)">Siguiente ➡</button>
+  <button id="btn-anterior" onclick="cambiarPagina(-1)">⬅ Anterior</button>
+  <button id="btn-siguiente" onclick="cambiarPagina(1)">Siguiente ➡</button>
 </div>
 
 <footer>
@@ -167,40 +173,17 @@
 
 <script>
   const productos = [
-    {
-      nombre: "Camisa casual blanca",
-      precio: "$27.51",
-      imagen: "https://i.pinimg.com/736x/ff/69/50/ff69509834d57f8348c89534ac0f16a3.jpg"
-    },
-    {
-      nombre: "Pantalón Vaquero",
-      precio: "$45.20",
-      imagen: "https://i.pinimg.com/736x/39/aa/5b/39aa5b6f5c3b4d605aa6de199be1c52a.jpg"
-    },
-    {
-      nombre: "Vestido de verano",
-      precio: "$112.99",
-      imagen: "https://i.pinimg.com/736x/7c/26/b2/7c26b24fa123e72f80f82f3c435105c3.jpg"
-    },
-    {
-      nombre: "Falda clásica negra",
-      precio: "$36.75",
-      imagen: "https://i.pinimg.com/736x/cb/33/ae/cb33ae764bb15ef57a22a82ac8a4f947.jpg"
-    },
-    {
-      nombre: "Chamarra beige",
-      precio: "$52.99",
-      imagen: "https://i.pinimg.com/736x/3f/8d/26/3f8d26780b4bc4b810b69e4175a77437.jpg"
-    },
-    {
-      nombre: "Camisa formal a cuadros",
-      precio: "$39.50",
-      imagen: "https://i.pinimg.com/736x/63/0c/67/630c672d5a0bce308bc6e08aa2b2c9d3.jpg"
-    }
+    { nombre: "Camisa blanca", precio: "$27.51", imagen: "https://i.pinimg.com/736x/ff/69/50/ff69509834d57f8348c89534ac0f16a3.jpg" },
+    { nombre: "Pantalón vaquero", precio: "$45.20", imagen: "https://i.pinimg.com/736x/39/aa/5b/39aa5b6f5c3b4d605aa6de199be1c52a.jpg" },
+    { nombre: "Vestido de verano", precio: "$112.99", imagen: "https://i.pinimg.com/736x/7c/26/b2/7c26b24fa123e72f80f82f3c435105c3.jpg" },
+    { nombre: "Falda clásica", precio: "$36.75", imagen: "https://i.pinimg.com/736x/cb/33/ae/cb33ae764bb15ef57a22a82ac8a4f947.jpg" },
+    { nombre: "Chamarra beige", precio: "$52.99", imagen: "https://i.pinimg.com/736x/3f/8d/26/3f8d26780b4bc4b810b69e4175a77437.jpg" },
+    { nombre: "Camisa a cuadros", precio: "$39.50", imagen: "https://i.pinimg.com/736x/63/0c/67/630c672d5a0bce308bc6e08aa2b2c9d3.jpg" }
   ];
 
   let paginaActual = 1;
   const productosPorPagina = 3;
+  let carrito = [];
 
   function mostrarProductos() {
     const contenedor = document.getElementById("lista-productos");
@@ -209,27 +192,40 @@
     const fin = inicio + productosPorPagina;
     const visibles = productos.slice(inicio, fin);
 
-    visibles.forEach(p => {
+    visibles.forEach((p, i) => {
+      const index = inicio + i;
       contenedor.innerHTML += `
         <div class="producto">
           <img src="${p.imagen}" alt="${p.nombre}">
           <h3>${p.nombre}</h3>
           <p>${p.precio}</p>
-          <button>Añadir al carrito</button>
+          <button onclick="agregarAlCarrito(${index})">Añadir al carrito</button>
         </div>
       `;
     });
+
+    actualizarFlechas();
   }
 
-  function cambiarPagina(direccion) {
+  function agregarAlCarrito(index) {
+    carrito.push(productos[index]);
+    document.getElementById("carrito-info").innerText = `Carrito: ${carrito.length} producto${carrito.length === 1 ? '' : 's'}`;
+  }
+
+  function cambiarPagina(dir) {
     const totalPaginas = Math.ceil(productos.length / productosPorPagina);
-    paginaActual += direccion;
+    paginaActual += dir;
     if (paginaActual < 1) paginaActual = 1;
     if (paginaActual > totalPaginas) paginaActual = totalPaginas;
     mostrarProductos();
   }
 
-  // Inicializar
+  function actualizarFlechas() {
+    const totalPaginas = Math.ceil(productos.length / productosPorPagina);
+    document.getElementById("btn-anterior").disabled = (paginaActual === 1);
+    document.getElementById("btn-siguiente").disabled = (paginaActual === totalPaginas);
+  }
+
   mostrarProductos();
 </script>
 
