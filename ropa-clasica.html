@@ -130,6 +130,41 @@
       font-weight: bold;
       color: #333;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      cursor: pointer;
+    }
+
+    #carrito-detalle {
+      display: none;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 15px;
+      width: 300px;
+      margin-bottom: 20px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+    #carrito-detalle ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    #carrito-detalle li {
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 0;
+      border-bottom: 1px solid #eee;
+    }
+    #carrito-detalle button {
+      background: none;
+      border: none;
+      color: #e74c3c;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    #carrito-total {
+      text-align: right;
+      font-weight: bold;
+      margin-top: 10px;
     }
 
     footer {
@@ -154,13 +189,14 @@
   </div>
 </header>
 
-<div class="carrito-info" id="carrito-info">
-  Carrito: 0 productos
+<div class="carrito-info" id="carrito-info" onclick="toggleCarrito()">Carrito: 0 productos</div>
+
+<div id="carrito-detalle">
+  <ul id="lista-carrito"></ul>
+  <div id="carrito-total">Total: $0.00</div>
 </div>
 
-<section class="productos" id="lista-productos">
-  <!-- Productos se cargan con JS -->
-</section>
+<section class="productos" id="lista-productos"></section>
 
 <div class="pagination">
   <button id="btn-anterior" onclick="cambiarPagina(-1)">⬅ Anterior</button>
@@ -209,7 +245,27 @@
 
   function agregarAlCarrito(index) {
     carrito.push(productos[index]);
+    actualizarCarrito();
+  }
+
+  function eliminarDelCarrito(i) {
+    carrito.splice(i, 1);
+    actualizarCarrito();
+  }
+
+  function actualizarCarrito() {
     document.getElementById("carrito-info").innerText = `Carrito: ${carrito.length} producto${carrito.length === 1 ? '' : 's'}`;
+    const lista = document.getElementById("lista-carrito");
+    lista.innerHTML = "";
+    let total = 0;
+
+    carrito.forEach((p, i) => {
+      const precioNum = parseFloat(p.precio.replace("$", ""));
+      total += precioNum;
+      lista.innerHTML += `<li>${p.nombre} <span>${p.precio}</span> <button onclick="eliminarDelCarrito(${i})">✕</button></li>`;
+    });
+
+    document.getElementById("carrito-total").innerText = `Total: $${total.toFixed(2)}`;
   }
 
   function cambiarPagina(dir) {
@@ -224,6 +280,11 @@
     const totalPaginas = Math.ceil(productos.length / productosPorPagina);
     document.getElementById("btn-anterior").disabled = (paginaActual === 1);
     document.getElementById("btn-siguiente").disabled = (paginaActual === totalPaginas);
+  }
+
+  function toggleCarrito() {
+    const panel = document.getElementById("carrito-detalle");
+    panel.style.display = panel.style.display === "block" ? "none" : "block";
   }
 
   mostrarProductos();
