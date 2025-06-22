@@ -223,14 +223,69 @@
 </footer>
 
 <script>
-const productos = [];
-for (let i = 1; i <= 50; i++) {
-  productos.push({
-    nombre: `Producto ${i}`,
-    precio: `$${(Math.random() * 100 + 10).toFixed(2)}`,
-    imagen: `https://picsum.photos/seed/prod${i}/300/400`
-  });
-}
+const productos = [
+  { nombre: "Vestido de gala rojo", precio: "$129.99", imagen: "https://img.veaul.com/catalog/product/o/1/o1cn01xzndin1udiwn8zpsu__0-item_pic/simg/elegantes-a-line-princess-rojo-de-compromiso-vestidos-de-gala-2021-fuera-del-hombro-correas-cruzadas-largos-ruffle-saten-vestidos-formales.jpeg@600w.jpg" },
+  { nombre: "Traje formal azul marino", precio: "$199.99", imagen: "https://m.media-amazon.com/images/I/51HTm7PxbxL._AC_UF894,1000_QL80_.jpg" },
+  { nombre: "Blusa de seda blanca", precio: "$89.99", imagen: "https://i5.walmartimages.com/asr/8364ed67-d08c-4f14-90da-2255efb2b7a8.92246251247c8913c437de0bdc0681f8.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF" },
+  { nombre: "Pantalón de vestir gris", precio: "$109.99", imagen: "https://www.petitelune.com.mx/cdn/shop/products/7350278124_a.jpg?v=1664915249&width=1946" },
+  { nombre: "Chaqueta de terciopelo verde", precio: "$249.99", imagen: "https://m.media-amazon.com/images/I/31egQ9mxm3L._AC_SY1000_.jpg" },
+  { nombre: "Falda lápiz negra", precio: "$79.99", imagen: "https://cdn-images.farfetch-contents.com/19/45/83/22/19458322_43430525_600.jpg" },
+  { nombre: "Camisa estampada pastel", precio: "$69.99", imagen: "https://assets.theplace.com/image/upload/t_pdp_img_m,f_auto,q_auto/v1/ecom/assets/products/gym/3009734/3009734_324Y.jpg" },
+  { nombre: "Abrigo trench caqui", precio: "$189.99", imagen: "https://m.media-amazon.com/images/I/31VCb3VLLgL._SY1000_.jpg" },
+  { nombre: "Mono elegante marfil", precio: "$139.99", imagen: "https://i.ebayimg.com/thumbs/images/g/yH0AAOSwx-VkAuZ6/s-l1200.jpg" },
+  { nombre: "Túnica bohemia beige", precio: "$99.99", imagen: "https://boho-via.com/wp-content/uploads/2024/08/O1CN01gwh4rL1o5jzeCVj8Y_2009995174-0-cib.jpg" },
+  { nombre: "Vestido midi estampado", precio: "$119.99", imagen: "https://i5.walmartimages.com/asr/605597db-db35-445d-b7c8-9056113252f1.e11a7733eef869c6031314018a912d51.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF" },
+  { nombre: "Pañuelo de seda lujo", precio: "$49.99", imagen: "https://i.etsystatic.com/12603089/r/il/5e7683/3066731711/il_570xN.3066731711_ga5c.jpg" },
+  { nombre: "Blazer cruzado gris", precio: "$159.99", imagen: "https://i.pinimg.com/474x/b7/b6/6b/b7b66b47613af314c5a4e4dcab10b197.jpg" },
+  { nombre: "Pantalón palazzo negro", precio: "$129.99", imagen: "https://julio.com/media/catalog/product/1/4/pantalon-palazzo-negro-tiro-alto-con-cinturonuby8.jpg?quality=80&bg-color=255,255,255&height=638&width=508&canvas=508:638" },
+  { nombre: "Vestido de encaje champagne", precio: "$149.99", imagen: "https://boutiquemariaregna.com/cdn/shop/products/CD948_champagne.jpg?v=1682090019" },
+  { nombre: "Camisa masculina blanca", precio: "$79.99", imagen: "https://i5.walmartimages.com/asr/1d27e47f-5538-413c-9c47-07d6fc3387ac.84ec8a9441fb4bb45d75e70f086c37e0.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF" },
+  { nombre: "Chaleco de lino beige", precio: "$119.99", imagen: "https://m.media-amazon.com/images/I/41p8GLnRiSL._AC_.jpg" },
+  { nombre: "Falda asimétrica azul", precio: "$89.99", imagen: "https://m.media-amazon.com/images/I/41SnLyU6a4L._AC_SY350_.jpg" },
+  { nombre: "Vestido satin mujer", precio: "$139.99", imagen: "https://m.media-amazon.com/images/I/7167XcgCyaL._AC_UF894,1000_QL80_.jpg" },
+  { nombre: "Pantalón cropped gris", precio: "$99.99", imagen: "https://www.subdued.com/media/catalog/product/p/n/pn051cpcol04f-4_6.jpg?optimize=high&fit=bounds&height=110&width=88&canvas=88:110" },
+  { nombre: "Abrigo de paño camel", precio: "$229.99", imagen: "https://estaticos-cdn.prensaiberica.es/clip/1fcb7353-3122-4078-a197-eaf37ea02cc9_woman-libre-1200_default_0.jpg" },
+  { nombre: "Mono de lino blanco", precio: "$129.99", imagen: "https://hips.hearstapps.com/hmg-prod/images/mono-blanco-zara-largo-1656679999.jpg" },
+  { nombre: "Top de encaje negro", precio: "$59.99", imagen: "https://static.pullandbear.net/assets/public/3267/0908/a56043e9bc5b/d2b6fe7165e9/03245370800-A6M/03245370800-A6M.jpg?ts=1731519421830&w=1082&f=auto" },
+  { nombre: "Traje pantalón gris", precio: "$219.99", imagen: "https://www.vittorio.es/media/catalog/product/cache/e0669628c833fe04d5675edb260740c6/p/a/pantalon_gris_de_vestir_hombre_vittorio_uniformes.jpg" },
+  { nombre: "Vestido coctel azul", precio: "$159.99", imagen: "https://i5.walmartimages.com/asr/d92872d1-cce9-41df-b089-50735cc0ba05.eae3ec0743533449aea3c9711ce59ac4.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF" },
+  { nombre: "Chaqueta bomber satén", precio: "$139.99", imagen: "https://cdn-images.farfetch-contents.com/22/91/55/68/22915568_53746000_600.jpg" },
+  { nombre: "Falda plisada midi", precio: "$99.99", imagen: "https://m.media-amazon.com/images/I/31M4OQvSCpL._AC_SY1000_.jpg" },
+  { nombre: "Camisa de organza rosa", precio: "$89.99", imagen: "https://www.mytheresa.com/media/1094/1238/100/eb/P00898475_d1.jpg" },
+  { nombre: "Mono largo negro", precio: "$149.99", imagen: "https://acdn-us.mitiendanube.com/stores/002/330/060/products/bdc1c8be-f562-4415-9357-9965f62d1a48-3e37bf50b844d7bf7617219431918128-1024-1024.jpeg" },
+  { nombre: "Traje chaqueta beige", precio: "$199.99", imagen: "https://m.media-amazon.com/images/I/81zE8vvgCAL._UY1000_.jpg" },
+  { nombre: "Vestido florado otoño", precio: "$119.99", imagen: "https://i5.walmartimages.com/asr/6c79a2c2-3023-4631-84c0-e87234dd847b.d647b117beb80f18387a76fae4dc8bc8.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF" },
+  { nombre: "Blazer lino blanco", precio: "$159.99", imagen: "https://image.hm.com/assets/hm/12/e5/12e512bc3aa6f999d5990ed6661805206b08a488.jpg?imwidth=2160" },
+  { nombre: "Pantalón culotte azul", precio: "$109.99", imagen: "https://julio.com/media/catalog/product/1/3/pantalon-culotte-azul-marino-a-rayas.jpg?quality=80&bg-color=255,255,255&height=638&width=508&canvas=508:638" },
+  { nombre: "Vestido asimétrico vino", precio: "$139.99", imagen: "https://m.media-amazon.com/images/I/31crfaL53qL._SY1000_.jpg" },
+  { nombre: "Blusa con volantes crema", precio: "$79.99", imagen: "https://media.vogue.mx/photos/5fd776ae00a4d351ae55c62a/2:3/w_2560%2Cc_limit/blusa-con-volantes-de-valentino-ss21.jpg" },
+  { nombre: "Chaqueta biker cuero", precio: "$229.99", imagen: "https://http2.mlstatic.com/D_NQ_NP_612807-MLM51212749086_082022-O-chamarra-biker-de-piel-gruesa-hombre-chaqueta-cuero-negra.webp" },
+  { nombre: "Falda tubo roja", precio: "$89.99", imagen: "https://img.kwcdn.com/product/fancy/26ba24e1-975c-4190-9b45-227754acbe12.jpg?imageMogr2/auto-orient%7CimageView2/2/w/800/q/70/format/webp" },
+  { nombre: "Top halter seda", precio: "$69.99", imagen: "https://static.pullandbear.net/assets/public/147a/41be/e95c43799ac5/8e7ed3817a0e/03474347800-A6M/03474347800-A6M.jpg?ts=1739983514321&w=1082&f=auto" },
+  { nombre: "Vestido cóctel negro", precio: "$149.99", imagen: "https://i5.walmartimages.com/asr/3f80ba9f-9542-47d7-9209-61f61dea0a58.008ad7223e87ad7a51f18dadfc237963.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF" },
+  { nombre: "Traje de ceremonia gris", precio: "$239.99", imagen: "https://i.etsystatic.com/32206548/r/il/f50b18/4339703278/il_570xN.4339703278_4cn6.jpg" },
+  { nombre: "Mono corto blanco", precio: "$109.99", imagen: "https://i5.walmartimages.com/asr/57d972e8-6594-488f-a1a0-2a7acdd7955b.083770c23011084dc570ba936ac956ad.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF" },
+  { nombre: "Blusa de encaje azul", precio: "$79.99", imagen: "https://media.gotrendier.mx/media/p/2022/05/28/n_db2153fc-defe-11ec-995f-028a3a3cca47.jpeg" },
+  { nombre: "Pantalón smoking negro", precio: "$189.99", imagen: "https://cdn.suitsupply.com/image/upload/b_rgb:efefef,c_fill,w_2600/b_rgb:efefef,c_pad,dpr_1,w_512,h_717,f_auto,q_auto,fl_progressive/products/Trousers/default/Winter/B2299_104.jpg" },
+  { nombre: "Vestido largo floral", precio: "$159.99", imagen: "https://i.etsystatic.com/21482068/r/il/c3a793/4939753891/il_570xN.4939753891_ax3v.jpg" },
+  { nombre: "Chaqueta tweed rosa", precio: "$179.99", imagen: "https://shop.mango.com/assets/rcs/pics/static/T8/fotos/S/87044094_85.jpg?imwidth=2048&imdensity=1&ts=1736780701413" },
+  { nombre: "Falda midi blanca", precio: "$89.99", imagen: "https://julio.com/media/catalog/product/4/5/falda-midi-blanca-pretina-enresortada-y-jaretas.jpg?quality=80&bg-color=255,255,255&height=638&width=508&canvas=508:638" },
+  { nombre: "Camisa semitransparente", precio: "$69.99", imagen: "https://media.cupshe.com/cdn-review.cupshe.com/cmc-admin/2023_02_10/16_48_3939/5b94c433-bec6-4692-8de6-29ffbf1ce05d/CAA07A3B003CC/4.jpg?speedsize=mxw_320" },
+  { nombre: "Mono de gala azul", precio: "$169.99", imagen: "https://i.etsystatic.com/26357678/r/il/dd64c2/6192897201/il_fullxfull.6192897201_oxxy.jpg" },
+  { nombre: "Blazer chíno negro", precio: "$159.99", imagen: "https://d1fufvy4xao6k9.cloudfront.net/feed/img/man_jacket/35135/without_model_small.png" },
+  { nombre: "Pantalón de pana marrón", precio: "$119.99", imagen: "https://highstreet.com.mx/cdn/shop/files/HIGH-STREET-Pantalon-cargo-de-pana-fit-wide-leg-BPCA-230378_02_18275d94-0e44-4e27-b43d-ed0a30c3e14a_1080x.jpg?v=1701991733" },
+  { nombre: "Vestido wrap floral", precio: "$129.99", imagen: "https://i.etsystatic.com/22842119/r/il/aef558/3311445972/il_570xN.3311445972_2m9y.jpg" },
+  { nombre: "Blusa de organza lavanda", precio: "$89.99", imagen: "https://ae01.alicdn.com/kf/S4f2f569b195e4b5e84ac8a8d1fa8d867X.jpg" },
+  { nombre: "Falda satinada verde", precio: "$99.99", imagen: "https://i.pinimg.com/564x/94/2c/91/942c91dbb963c50479d9f3df784ec3f6.jpg" },
+  { nombre: "Chaqueta de cuero beige", precio: "$219.99", imagen: "https://marrucos.mx/cdn/shop/files/Chaquetas-de-cuero-elegantes-para-mujer-abrigos-informales-con-cremallera-ropa-de-calle-a-la-moda_4b2e7a60-74da-46c6-b417-d04834646f41.jpg?v=1718742207" },
+  { nombre: "Vestido de lentejuelas oro", precio: "$199.99", imagen: "https://sharetribe.imgix.net/5fc75098-d907-4a37-95a5-770989517a9c/65d3dd6e-7ed3-4f9c-9fad-fb2a958d2ab5?auto=format&fit=clip&h=2400&w=2400&s=e75216c325adc798c068d73a38480d44" },
+  { nombre: "Traje pantalón rosa palo", precio: "$229.99", imagen: "https://i.etsystatic.com/26357678/r/il/4a06e0/6163047068/il_570xN.6163047068_neay.jpg" },
+  { nombre: "Mono asimétrico negro", precio: "$139.99", imagen: "https://shop.mango.com/assets/rcs/pics/static/T7/fotos/S/77098267_99_B.jpg?imwidth=2048&imdensity=1&ts=1725881676376" },
+  { nombre: "Blazer oversize gris", precio: "$159.99", imagen: "https://image.hm.com/assets/hm/6e/ea/6eea269d745c074369600e4be79098d51772b01a.jpg?imwidth=2160" },
+  { nombre: "Vestido de punto fino", precio: "$109.99", imagen: "https://http2.mlstatic.com/D_NQ_NP_750793-MLM76162832738_052024-O-vestido-ajustado-sin-espalda-de-punto-fino-de-color-liso.webp" },
+  { nombre: "Falda larga chiffon", precio: "$119.99", imagen: "https://m.media-amazon.com/images/I/51RHs8ACMLL._AC_.jpg" }
+];
+</script>
 
 let paginaActual = 1;
 const productosPorPagina = 10;
